@@ -2,7 +2,7 @@
 url=$1
 play_token=$2
 number_of_tracks=`curl -s $url | egrep -o [0-9]+\ tracks | cut -d ' ' -f1`
-mix_id=`curl -s $url | egrep -o mixes/[0-9]{7} -m1 | cut -d '/' -f2`
+mix_id=`curl -s $url | egrep -o mixes/[0-9]+ -m1 | cut -d '/' -f2`
 mix_name=`echo $url | cut -d '/' -f5`
 next_url="http://8tracks.com/sets/$play_token/next?mix_id=$mix_id&reverse=true&format=jsonh"
 tracks_played_url="http://8tracks.com/sets/$play_token/tracks_played?mix_id=$mix_id&reverse=true&format=jsonh"
