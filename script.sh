@@ -18,5 +18,10 @@ done
 curl -s $tracks_played_url > $mix_name.json
 cat $mix_name.json | underscore select .track_file_stream_url --outfmt text | xargs -l1 axel
 cat last.json | underscore select .track_file_stream_url --outfmt text | xargs axel
-rm last.json
+cat $mix_name.json | underscore select .name --outfmt text > names.txt && cat last.json | underscore select .name --outfmt text >> names.txt
+cat $mix_name.json | underscore select .performer --outfmt text > artists.txt && cat last.json | underscore select .performer --outfmt text >> artists.txt
+cat $mix_name.json | underscore select .release_name --outfmt text > albums.txt && cat last.json | underscore select .release_name --outfmt text >> albums.txt
+cat $mix_name.json  | underscore select .track_file_stream_url --outfmt text | cut -d '/' -f8 > files.txt && cat last.json  | underscore select .track_file_stream_url --outfmt text | cut -d '/' -f8 >> files.txt
+echo "Filename / Song / Artist / Album" > tracklist.txt && paste -d '/' files.txt names.txt artists.txt albums.txt >> tracklist.txt 
+rm *.json files.txt names.txt artists.txt albums.txt
 cd ..
