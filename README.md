@@ -12,7 +12,7 @@ A bash script to download playlists from 8tracks. It's a very hackish way of doi
 
 ##Steps
 
-1. Go to an 8tracks mix page (like [this](http://8tracks.com/sundeepbhat/travel-read-experience)) and open up Chrome developer tools.
+1. Go to an 8tracks mix page (like [this](http://8tracks.com/sundeepbhat/travel-read-experience)) in a new incognito window (basically none of the tracks should have been played earlier) and open up Chrome developer tools.
 2. Copy the url. This is the ***mix-url*** in the command above.
 3. Get the ***play-token*** from the console (you may need to enable XHR logging) or the network tab, where it typically appears as `.../sets/<play-token>/...`
 4. Execute the above command and tracks from the mix are downloaded in a new folder with the same name as the mix.
