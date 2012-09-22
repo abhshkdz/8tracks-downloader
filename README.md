@@ -6,7 +6,9 @@ A bash script to download playlists from 8tracks. It's a very hackish way of doi
 
 	./script.sh <mix-url> <play-token>
 
-Requires [Underscore-CLI](https://github.com/ddopson/underscore-cli) for parsing JSON
+##Requirements 
+* [Underscore-CLI](https://github.com/ddopson/underscore-cli) for parsing JSON
+* [Axel](http://axel.alioth.debian.org/) for downloading tracks
 
 ##Steps
 
