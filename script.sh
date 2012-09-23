@@ -18,5 +18,27 @@ done
 curl -s $tracks_played_url > $mix_name.json
 cat $mix_name.json | underscore select .track_file_stream_url --outfmt text | xargs -l1 axel
 cat last.json | underscore select .track_file_stream_url --outfmt text | xargs axel
+cat $mix_name.json | underscore select '.track_file_stream_url, .name' --outfmt text | cut -d '/' -f8 | cat > name.txt
+index=0
+while read line ; do
+	MYARRAY[$index]="$line"
+	index=$(($index+1))
+done < name.txt
+index1=0
+index2=1
+for ((i=0; i<24; i++)); do
+	mv ${MYARRAY[$index1]} "${MYARRAY[$index2]}.m4a"
+	index1=$(($index1+2))
+	index2=$(($index2+2))
+done
+cat last.json | underscore select '.track_file_stream_url, .name' --outfmt text | cut -d '/' -f8 | cat > lastname.txt
+index=0
+while read line ; do
+	MYARRAY[$index]="$line"
+	index=$(($index+1))
+done < lastname.txt
+mv ${MYARRAY[0]} "${MYARRAY[1]}.m4a"
 rm last.json
+rm lastname.txt
+rm name.txt
 cd ..
