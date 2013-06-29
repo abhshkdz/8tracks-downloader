@@ -1,9 +1,9 @@
 #!/bin/bash
 url=$1
 play_token=$2
-number_of_tracks=`curl -s $url | egrep -o [0-9]+\ tracks | cut -d ' ' -f1`
-mix_id=`curl -s $url | egrep -o mixes/[0-9]+ -m1 | cut -d '/' -f2`
-mix_name=`echo $url | cut -d '/' -f5`
+number_of_tracks=`curl -s $url | egrep -o [0-9]+\ tracks | awk '{ print $1 }'`
+mix_id=`curl -s $url | egrep -o mixes/[0-9]+ -m1 | awk -F'/' '{ print $2 }'`
+mix_name=`echo $url | awk -F'/' '{ print $5 }'`
 next_url="http://8tracks.com/sets/$play_token/next?mix_id=$mix_id&reverse=true&format=jsonh"
 tracks_played_url="http://8tracks.com/sets/$play_token/tracks_played?mix_id=$mix_id&reverse=true&format=jsonh"
 echo "mix=$mix_name"
@@ -23,7 +23,7 @@ cat $mix_name.json  | underscore select .track_file_stream_url --outfmt text > f
 echo "Filename / Song / Artist / Album" > tracklist.txt && paste -d '|' files.txt names.txt artists.txt albums.txt >> tracklist.txt 
 sed 1d tracklist.txt | while read line
 do
-    axel "`echo $line | cut -d '|' -f1`" -o "`echo $line | cut -d '|' -f2,3,4 --output-delimiter='|'`.m4a"
+    axel "`echo $line | awk -F'|' '{ print $1 }'`" -o "`echo $line | awk -F'|' '{ print $2,$3,$4 }'`.m4a"
 done
 rm *.json files.txt names.txt artists.txt albums.txt
 cd ..
