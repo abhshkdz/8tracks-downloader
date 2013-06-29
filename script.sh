@@ -1,4 +1,8 @@
 #!/bin/bash
+
+#Check for axel
+command -v axel >/dev/null 2>&1 || { echo >&2 "I require axel but it's not installed.  Aborting."; exit 1; }
+
 url=$1
 play_token=$2
 number_of_tracks=`curl -s $url | egrep -o [0-9]+\ tracks | awk '{ print $1 }'`
