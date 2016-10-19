@@ -5,7 +5,7 @@ command -v axel >/dev/null 2>&1 || { echo >&2 "I require axel but it's not insta
 
 url=$1
 play_token=$2
-number_of_tracks=`curl -s $url | egrep -o [0-9]+\ tracks | awk '{ print $1 }'`
+number_of_tracks=`curl -s $url | egrep -m 1 -o [0-9]+\ tracks | awk '{ print $1 }'`
 mix_id=`curl -s $url | egrep -o mixes/[0-9]+ -m1 | awk -F'/' '{ print $2 }'`
 mix_name=`echo $url | awk -F'/' '{ print $5 }'`
 next_url="http://8tracks.com/sets/$play_token/next?mix_id=$mix_id&reverse=true&format=jsonh"
